@@ -1,6 +1,7 @@
 (import extra/io (read-lines! write-bytes!))
 (import string)
-(import lexer ())
+(import lexer (lex))
+(import parser (parse))
 (import err ())
 
 (defun load-input! (infile)
@@ -17,8 +18,9 @@
 
 (defun compile (infile outfile)
     (let* [(lines (load-input! infile))
-           (lexed-lines (lex lines))]
-      (print! (pretty lexed-lines))))
+           (lexed-lines (lex lines))
+           (output (parse lexed-lines))]
+      (print! (pretty output))))
 
 
 

@@ -55,30 +55,30 @@
 
 (defun parse-register (str)
   (cond 
-    ((and (= (string/char-at str 1) "v") (= (#s str) 2))
+    [(and (= (string/char-at str 1) "v") (= (#s str) 2))
       (when-with (n (string->number (string/char-at str 2) 16))
-        (list 'v n)))
-    ((= str "i") (list 'i))
-    ((= str "st") (list 'st))
-    ((= str "dt") (list 'dt))
-    (true nil)))
+        (list 'v n))]
+    [(= str "i") (list 'i)]
+    [(= str "st") (list 'st)]
+    [(= str "dt") (list 'dt)]
+    [true nil]))
 
 (defun parse-special (str)
   (cond
-    ((= str "k") (list 'k))
-    ((= str "f") (list 'f))
-    ((= str "b") (list 'b))
-    ((= str "[i]") (list 'fi))
+    [(= str "k") (list 'k)]
+    [(= str "f") (list 'f)]
+    [(= str "b") (list 'b)]
+    [(= str "[i]") (list 'ai)]
     (true nil)))
 
 (defun parse-token (str)
   (cond 
-    ((parse-register str) (parse-register str))
-    ((parse-special str) (parse-special str))
-    ((parse-address str) (list 'address (parse-address str)))
-    ((parse-byte str) (list 'byte (parse-byte str)))
-    ((valid-label str) (list 'label str))
-    (true '())))
+    [(parse-register str) (parse-register str)]
+    [(parse-special str) (parse-special str)]
+    [(parse-address str) (list 'address (parse-address str))]
+    [(parse-byte str) (list 'byte (parse-byte str))]
+    [(valid-label str) (list 'label str)]
+    [true '()]))
 
 (defun make-tokens (lines-parts)
   (map (lambda (line-idx)
@@ -97,7 +97,7 @@
                        (when (! (letters-only part))
                          (err-line! line-idx (.. "unexpected symbol in opcode \"" part "\".")))
                        (list 'opcode part)))
-                   (progn ;; do other
+                   (progn
                      (when (= part "")
                        (err-line! line-idx "empty argument."))
                      (with (token (parse-token part))
