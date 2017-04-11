@@ -20,8 +20,8 @@
     (let* [(lines (load-input! infile))
            (lexed-lines (lex lines))
            (output (parse lexed-lines))]
-      (print! (pretty output))))
-
+      (write-output! outfile output)
+      (print! (pretty (concat (map (lambda (opcode) (string/format "%02X" opcode)) output))))))
 
 
 (defun run ()

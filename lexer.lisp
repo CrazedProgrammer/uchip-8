@@ -38,8 +38,8 @@
     match))
 
 (defun parse-int (str)
-  (if (= (string/char-at str 1) "#")
-    (string->number (string/sub str 2 (#s str)) 16)
+  (if (= (string/char-at str (#s str)) "h")
+    (string->number (string/sub str 1 (- (#s str) 1)) 16)
     (string->number str 10)))
 
 (defun parse-byte (str)
@@ -49,7 +49,7 @@
 
 (defun parse-address (str)
   (when (= (string/char-at str 1) "$")
-    (when-with (int (parse-int (string/sub str 2 (# str))))
+    (when-with (int (parse-int (string/sub str 2 (#s str))))
       (when (and (>= int 0) (< int 4096))
         int))))
 
@@ -69,7 +69,7 @@
     [(= str "f") (list 'f)]
     [(= str "b") (list 'b)]
     [(= str "[i]") (list 'ai)]
-    (true nil)))
+    [true nil]))
 
 (defun parse-token (str)
   (cond 
