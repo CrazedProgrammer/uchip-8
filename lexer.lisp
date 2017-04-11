@@ -88,11 +88,10 @@
                (with (part (nth parts part-idx))
                  (if (= part-idx 1)
                    (if (= (string/char-at part -1) ":")
-                     (progn
-                       (with (label (string/sub part 1 (- (#s part) 1)))
-                         (when (! (valid-label label))
-                           (err-line! line-idx (.. "invalid label name \"" label "\".")))
-                         (list 'label (string/sub part 1 (- (#s part) 1)))))
+                     (with (label (string/sub part 1 (- (#s part) 1)))
+                       (when (! (valid-label label))
+                         (err-line! line-idx (.. "invalid label name \"" label "\".")))
+                       (list 'label (string/sub part 1 (- (#s part) 1))))
                      (progn
                        (when (! (letters-only part))
                          (err-line! line-idx (.. "unexpected symbol in opcode \"" part "\".")))
