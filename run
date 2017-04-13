@@ -1,3 +1,0 @@
-#!/bin/bash
-
-lua ~/Programs/urn/tacky/cli.lua ./main.lisp -i ./ --out ./out --run -- $@
